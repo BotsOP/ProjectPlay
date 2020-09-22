@@ -2,22 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerShoot : MonoBehaviour
+public class PlayerShoot : BasicMovement
 {
-    [SerializeField] float speed = 5;
     [SerializeField] float coolDownShoot = 1f;
-    Camera mainCamera;
+    [SerializeField] float knockbackTime = 5f;
+    PhysicMaterial pm;
     float lastTime;
-    Rigidbody rb;
     bool lerp;
     private IEnumerator coroutine;
     Vector3 knockback;
     float speed2;
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
         mainCamera = Camera.main;
-
+        rb = GetComponent<Rigidbody>();
+        pm = GetComponent<BoxCollider>().sharedMaterial;
         lastTime = Time.time + coolDownShoot;
     }
 
@@ -25,13 +24,15 @@ public class PlayerShoot : MonoBehaviour
     void Update()
     {
         Shoot();
+        //pm.dynamicFriction = 10f;
     }
 
     private void Shoot()
     {
         if(lastTime <= Time.time && Input.GetMouseButton(0))
         {
-            coroutine = LerpKnockback(coolDownShoot);
+            Debug.Log("shot");
+            coroutine = LerpKnockback(knockbackTime);
             StartCoroutine(coroutine);
             
             knockback = new Vector3(mainCamera.transform.forward.x, mainCamera.transform.forward.y / 100, mainCamera.transform.forward.z);
@@ -40,11 +41,12 @@ public class PlayerShoot : MonoBehaviour
 
         if(lerp)
         {
-            speed2 = Mathf.Lerp(0,1000,lastTime - Time.time);
+            speed2 = Mathf.Lerp(0,1000, (lastTime - Time.time + knockbackTime - coolDownShoot) / knockbackTime);
+            //Debug.Log(speed2 + "    " + (lastTime - Time.time + knockbackTime - coolDownShoot) / knockbackTime);
         }
 
-        Vector3 zMov2 = knockback * speed2 * Time.deltaTime * -1;
-        rb.AddForce(zMov2.x, zMov2.y, zMov2.z, ForceMode.Impulse);
+        Vector3 velocity = knockback * speed2 * Time.deltaTime * -1;
+        rb.AddForce(velocity.x, velocity.y, velocity.z, ForceMode.Impulse);
     }
 
     private IEnumerator LerpKnockback(float waitTime)

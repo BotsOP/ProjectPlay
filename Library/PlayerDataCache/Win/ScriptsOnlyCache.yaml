@@ -43,12 +43,14 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 15780}
+      Script: {instanceID: 11136}
     - Class: 114
-      Script: {instanceID: 16082}
+      Script: {instanceID: 12054}
     - Class: 114
-      Script: {instanceID: 19260}
+      Script: {instanceID: 12512}
     - Class: 115
+      Script: {instanceID: 0}
+    - Class: 134
       Script: {instanceID: 0}
     - Class: 136
       Script: {instanceID: 0}
@@ -57,6 +59,12 @@ ScriptsOnlyBuild:
     - Class: 196
       Script: {instanceID: 0}
   scriptHashData:
+  - hash:
+      serializedVersion: 2
+      Hash: 57697670007a3a3e5213716e4dfbfd64
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PlayerShoot
   - hash:
       serializedVersion: 2
       Hash: 4bc4346a71a8df53a6b106f68ef3a190
@@ -275,6 +283,12 @@ ScriptsOnlyBuild:
     className: RemoteTestResultSender
   - hash:
       serializedVersion: 2
+      Hash: 12c21ce9c2ded0c3b207332bc0e224da
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BasicMovement
+  - hash:
+      serializedVersion: 2
       Hash: 4fd8bf02e3089425d3502e26c44ba31a
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
@@ -345,6 +359,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: TimelineAsset
+  - hash:
+      serializedVersion: 2
+      Hash: b8556a6dd6245533907276c0a1480328
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PlayerCamera
   - hash:
       serializedVersion: 2
       Hash: 3b760e6526e13f7504f59e210145899a
@@ -477,24 +497,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
-  - hash:
-      serializedVersion: 2
-      Hash: f5e1ba9ac7da625aba6e0385a09277bc
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: BasicMovement
-  - hash:
-      serializedVersion: 2
-      Hash: b8556a6dd6245533907276c0a1480328
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: PlayerCamera
-  - hash:
-      serializedVersion: 2
-      Hash: d71167bcfa08bf9a42f5c29503880f67
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: PlayerShoot
   platform: 5
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
