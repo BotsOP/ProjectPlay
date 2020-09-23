@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerShoot : BasicMovement
 {
@@ -11,7 +12,9 @@ public class PlayerShoot : BasicMovement
     bool lerp;
     private IEnumerator coroutine;
     Vector3 knockback;
-    float speed2;
+    float speedKnockback;
+    int ammo = 1;
+    public Text txt;
     void Start()
     {
         mainCamera = Camera.main;
@@ -24,28 +27,34 @@ public class PlayerShoot : BasicMovement
     void Update()
     {
         Shoot();
-        //pm.dynamicFriction = 10f;
+        if(IsGrounded())
+        {
+            ammo = 1;
+        }
+        txt.text = "Ammo: " + ammo;
     }
 
     private void Shoot()
     {
-        if(lastTime <= Time.time && Input.GetMouseButton(0))
+        if(lastTime <= Time.time && Input.GetMouseButton(0) && ammo > 0)
         {
             Debug.Log("shot");
+            ammo--;
             coroutine = LerpKnockback(knockbackTime);
             StartCoroutine(coroutine);
             
-            knockback = new Vector3(mainCamera.transform.forward.x, mainCamera.transform.forward.y / 100, mainCamera.transform.forward.z);
+            knockback = new Vector3(mainCamera.transform.forward.x, mainCamera.transform.forward.y / 50, mainCamera.transform.forward.z);
             lastTime = Time.time + coolDownShoot;
         }
+        
 
         if(lerp)
         {
-            speed2 = Mathf.Lerp(0,1000, (lastTime - Time.time + knockbackTime - coolDownShoot) / knockbackTime);
+            speedKnockback = Mathf.Lerp(0,1000, (lastTime - Time.time + knockbackTime - coolDownShoot) / knockbackTime);
             //Debug.Log(speed2 + "    " + (lastTime - Time.time + knockbackTime - coolDownShoot) / knockbackTime);
         }
 
-        Vector3 velocity = knockback * speed2 * Time.deltaTime * -1;
+        Vector3 velocity = knockback * speedKnockback * Time.deltaTime * -1;
         rb.AddForce(velocity.x, velocity.y, velocity.z, ForceMode.Impulse);
     }
 
@@ -54,6 +63,6 @@ public class PlayerShoot : BasicMovement
         lerp = true;
         yield return new WaitForSeconds(waitTime);
         lerp = false;
-        speed2 = 0;
+        speedKnockback = 0;
     }
 }

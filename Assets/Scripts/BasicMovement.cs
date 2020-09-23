@@ -14,11 +14,17 @@ public class BasicMovement : MonoBehaviour
     float momentumSpeed = 10;
     public Camera mainCamera;
     bool groundedStart;
+    bool slideStart;
     bool checkAcceleration = true;
+    public bool lerpSlide;
+    public float speedSlide;
+    float timeSlide;
+    public float timeToSlide;
     Vector2 playerPos;
     Vector2 tempPlayerPos;
     public Vector2 playerAcceleration;
     Vector2 tempPlayerAcceleration;
+    Vector2 tempPlayerAccelerationSlide;
 
     public Rigidbody rb;
     // Start is called before the first frame update
@@ -34,6 +40,10 @@ public class BasicMovement : MonoBehaviour
         Move();
         Jump();
         StartCoroutine("CalculateAccelerationPlayer");
+        if(IsGrounded())
+        {
+            //Debug.Log("reset ammo");
+        }
     }
 
     private void Move()
@@ -47,15 +57,17 @@ public class BasicMovement : MonoBehaviour
         //Smooths the movements and multiplies it to make it useable
         currentDir = Vector2.SmoothDamp(currentDir, targetDir, ref currentDirVelocity, moveSmoothTime);
 
-        //rb.velocity causes there to be no slippery!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
         if(IsGrounded()) 
-        {
-            
+        {   
             Vector2 velocity = (currentDir) * speed * 200 * Time.deltaTime;
 
-            rb.velocity = new Vector3(velocity.x, rb.velocity.y, velocity.y);
+            if(!Input.GetKey(KeyCode.LeftControl))
+            {
+                rb.velocity = new Vector3(velocity.x, rb.velocity.y, velocity.y);
+            }
+            
             groundedStart = true;
+            
         }
         else
         {
@@ -63,13 +75,43 @@ public class BasicMovement : MonoBehaviour
             {
                 tempPlayerAcceleration = playerAcceleration;
                 groundedStart = false;
-            } 
-            currentDir = Vector2.SmoothDamp(currentDir, targetDir, ref currentDirVelocity, moveSmoothTime);
+            }
 
             Vector2 velocity = (currentDir) * speed * 100 * Time.deltaTime;
             Vector2 momentumVel = velocity + tempPlayerAcceleration * Time.deltaTime * 10;
             
             rb.velocity = new Vector3(momentumVel.x, rb.velocity.y, momentumVel.y);
+        }
+
+        
+        if(Input.GetKey(KeyCode.LeftControl))
+        {
+            if(slideStart)
+            {
+                tempPlayerAccelerationSlide = playerAcceleration;
+                timeSlide = Time.time;
+                speedSlide = 10;
+                slideStart = false;
+            }
+
+            if(IsGrounded())
+            {
+                Vector2 velocitySlide = (currentDir) * speed * 100 * Time.deltaTime;
+                Vector2 momentumVel = velocitySlide + tempPlayerAccelerationSlide * Time.deltaTime * speedSlide;
+                rb.velocity = new Vector3(momentumVel.x, rb.velocity.y, momentumVel.y);
+            }
+
+            if(Time.time > timeSlide + timeToSlide)
+                lerpSlide = false;
+            else
+                lerpSlide = true;
+                
+        }
+        else
+            slideStart = true;
+        if(lerpSlide)
+        {
+            speedSlide = Mathf.LerpUnclamped(0,10, (timeSlide - Time.time + timeToSlide) / timeToSlide);
         }
     }
 
