@@ -7,7 +7,6 @@ public class PlayerShoot : BasicMovement
 {
     [SerializeField] float coolDownShoot = 1f;
     [SerializeField] float knockbackTime = 5f;
-    PhysicMaterial pm;
     float lastTime;
     bool lerp;
     private IEnumerator coroutine;
@@ -15,19 +14,20 @@ public class PlayerShoot : BasicMovement
     float speedKnockback;
     int ammo = 1;
     public Text txt;
+    BasicMovement basicMovement;
     void Start()
     {
         mainCamera = Camera.main;
         rb = GetComponent<Rigidbody>();
-        pm = GetComponent<BoxCollider>().sharedMaterial;
         lastTime = Time.time + coolDownShoot;
+        basicMovement = GetComponent<BasicMovement>();
     }
 
     // Update is called once per frame
     void Update()
     {
         Shoot();
-        if(IsGrounded())
+        if(basicMovement.isGrounded)
         {
             ammo = 1;
         }
@@ -43,7 +43,7 @@ public class PlayerShoot : BasicMovement
             coroutine = LerpKnockback(knockbackTime);
             StartCoroutine(coroutine);
             
-            knockback = new Vector3(mainCamera.transform.forward.x, mainCamera.transform.forward.y / 50, mainCamera.transform.forward.z);
+            knockback = new Vector3(mainCamera.transform.forward.x, mainCamera.transform.forward.y / 30, mainCamera.transform.forward.z);
             lastTime = Time.time + coolDownShoot;
         }
         

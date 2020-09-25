@@ -7,11 +7,10 @@ public class BasicMovement : MonoBehaviour
     [SerializeField] float speed = 5f;
     [SerializeField] float moveSmoothTime = 0.03f;
     [SerializeField] float jumpForce = 5f;
+    [SerializeField] float jumpMomentumForce = 5;
     public float raycastDistance;
     Vector2 currentDir = Vector2.zero;
     Vector2 currentDirVelocity = Vector2.zero;
-    Vector2 momentumDir;
-    float momentumSpeed = 10;
     public Camera mainCamera;
     bool groundedStart;
     bool slideStart;
@@ -25,27 +24,26 @@ public class BasicMovement : MonoBehaviour
     public Vector2 playerAcceleration;
     Vector2 tempPlayerAcceleration;
     Vector2 tempPlayerAccelerationSlide;
-
+    public bool isGrounded;
     public Rigidbody rb;
     // Start is called before the first frame update
     void Start()
     {
         mainCamera = Camera.main;
         rb = GetComponent<Rigidbody>();
+        Application.targetFrameRate = 60;
     }
 
     // Update is called once per frame
+
+    //MAKE CAPSULE HAVE MORE WEIGHT SO THAT IT FALLS FASTER ITS IMPORTANT WAY TOO FLOATY
     void Update()
     {
         Move();
         Jump();
         StartCoroutine("CalculateAccelerationPlayer");
-        if(IsGrounded())
-        {
-            //Debug.Log("reset ammo");
-        }
+        
     }
-
     private void Move()
     {
         //Gets the input directions locally
@@ -57,10 +55,9 @@ public class BasicMovement : MonoBehaviour
         //Smooths the movements and multiplies it to make it useable
         currentDir = Vector2.SmoothDamp(currentDir, targetDir, ref currentDirVelocity, moveSmoothTime);
 
-        if(IsGrounded()) 
+        if(isGrounded) 
         {   
             Vector2 velocity = (currentDir) * speed * 200 * Time.deltaTime;
-
             if(!Input.GetKey(KeyCode.LeftControl))
             {
                 rb.velocity = new Vector3(velocity.x, rb.velocity.y, velocity.y);
@@ -69,6 +66,8 @@ public class BasicMovement : MonoBehaviour
             groundedStart = true;
             
         }
+
+        //momentum when jumping
         else
         {
             if(groundedStart)
@@ -78,15 +77,15 @@ public class BasicMovement : MonoBehaviour
             }
 
             Vector2 velocity = (currentDir) * speed * 100 * Time.deltaTime;
-            Vector2 momentumVel = velocity + tempPlayerAcceleration * Time.deltaTime * 10;
+            Vector2 momentumVel = velocity + tempPlayerAcceleration * Time.deltaTime * jumpMomentumForce;
             
             rb.velocity = new Vector3(momentumVel.x, rb.velocity.y, momentumVel.y);
         }
 
-        
+        //sliding
         if(Input.GetKey(KeyCode.LeftControl))
         {
-            if(slideStart)
+            if(slideStart && isGrounded)
             {
                 tempPlayerAccelerationSlide = playerAcceleration;
                 timeSlide = Time.time;
@@ -94,7 +93,7 @@ public class BasicMovement : MonoBehaviour
                 slideStart = false;
             }
 
-            if(IsGrounded())
+            if(isGrounded)
             {
                 Vector2 velocitySlide = (currentDir) * speed * 100 * Time.deltaTime;
                 Vector2 momentumVel = velocitySlide + tempPlayerAccelerationSlide * Time.deltaTime * speedSlide;
@@ -111,7 +110,7 @@ public class BasicMovement : MonoBehaviour
             slideStart = true;
         if(lerpSlide)
         {
-            speedSlide = Mathf.LerpUnclamped(0,10, (timeSlide - Time.time + timeToSlide) / timeToSlide);
+            speedSlide = Mathf.LerpUnclamped(0,8, (timeSlide - Time.time + timeToSlide) / timeToSlide);
         }
     }
 
@@ -133,15 +132,9 @@ public class BasicMovement : MonoBehaviour
 
     private void Jump()
     {
-        if(Input.GetKeyDown(KeyCode.Space) && IsGrounded())
+        if(Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.AddForce(0, jumpForce, 0, ForceMode.Impulse);
-            Debug.Log("jumped");
         }
-    }
-    public bool IsGrounded()
-    {
-        Debug.DrawRay(transform.position, Vector3.down * raycastDistance, Color.blue);
-        return Physics.Raycast(transform.position, Vector3.down, raycastDistance);
     }
 }
