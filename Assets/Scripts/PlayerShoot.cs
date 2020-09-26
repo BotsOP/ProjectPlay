@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerShoot : BasicMovement
+public class PlayerShoot : MonoBehaviour
 {
     [SerializeField] float coolDownShoot = 1f;
     [SerializeField] float knockbackTime = 5f;
@@ -15,6 +15,8 @@ public class PlayerShoot : BasicMovement
     int ammo = 1;
     public Text txt;
     BasicMovement basicMovement;
+    Camera mainCamera;
+    Rigidbody rb;
     void Start()
     {
         mainCamera = Camera.main;
@@ -51,7 +53,6 @@ public class PlayerShoot : BasicMovement
         if(lerp)
         {
             speedKnockback = Mathf.Lerp(0,1000, (lastTime - Time.time + knockbackTime - coolDownShoot) / knockbackTime);
-            //Debug.Log(speed2 + "    " + (lastTime - Time.time + knockbackTime - coolDownShoot) / knockbackTime);
         }
 
         Vector3 velocity = knockback * speedKnockback * Time.deltaTime * -1;

@@ -26,10 +26,12 @@ public class BasicMovement : MonoBehaviour
     Vector2 tempPlayerAccelerationSlide;
     public bool isGrounded;
     public Rigidbody rb;
+    PlayerCheckPoint playerCheckPoint;
     // Start is called before the first frame update
     void Start()
     {
         mainCamera = Camera.main;
+        playerCheckPoint = GetComponent<PlayerCheckPoint>();
         rb = GetComponent<Rigidbody>();
         Application.targetFrameRate = 60;
     }
@@ -39,7 +41,11 @@ public class BasicMovement : MonoBehaviour
     //MAKE CAPSULE HAVE MORE WEIGHT SO THAT IT FALLS FASTER ITS IMPORTANT WAY TOO FLOATY
     void Update()
     {
-        Move();
+        if(!playerCheckPoint.shouldStopMovement)
+        {
+            Move();
+        }
+        
         Jump();
         StartCoroutine("CalculateAccelerationPlayer");
         
