@@ -55,7 +55,7 @@ public class PlayerShoot : MonoBehaviour
             speedKnockback = Mathf.Lerp(0,1000, (lastTime - Time.time + knockbackTime - coolDownShoot) / knockbackTime);
         }
 
-        Vector3 velocity = knockback * speedKnockback * Time.deltaTime * -1;
+        Vector3 velocity = knockback * speedKnockback * Time.deltaTime * -1 * 20;
         rb.AddForce(velocity.x, velocity.y, velocity.z, ForceMode.Impulse);
     }
 

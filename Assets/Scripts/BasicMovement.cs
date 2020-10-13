@@ -45,6 +45,10 @@ public class BasicMovement : MonoBehaviour
         {
             Move();
         }
+        else
+        {
+            rb.velocity = Vector3.zero;
+        }
         
         Jump();
         StartCoroutine("CalculateAccelerationPlayer");

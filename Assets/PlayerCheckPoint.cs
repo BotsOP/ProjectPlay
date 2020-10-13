@@ -30,7 +30,7 @@ public class PlayerCheckPoint : MonoBehaviour
     private IEnumerator StopMovement()
     {
         shouldStopMovement = true;
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.2f);
         shouldStopMovement = false;
     }
 }
