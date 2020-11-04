@@ -12,7 +12,7 @@ public class PlayerShoot : MonoBehaviour
     private IEnumerator coroutine;
     Vector3 knockback;
     float speedKnockback;
-    int ammo = 1;
+    public int ammo;
     public Text txt;
     BasicMovement basicMovement;
     Camera mainCamera;
@@ -29,10 +29,6 @@ public class PlayerShoot : MonoBehaviour
     void Update()
     {
         Shoot();
-        if(basicMovement.isGrounded)
-        {
-            ammo = 1;
-        }
         txt.text = "Ammo: " + ammo;
     }
 

@@ -95,6 +95,7 @@ public class BasicMovement : MonoBehaviour
         //sliding
         if(Input.GetKey(KeyCode.LeftControl))
         {
+            gameObject.transform.localScale = new Vector3(1,0.8f,1);
             if(slideStart && isGrounded)
             {
                 tempPlayerAccelerationSlide = playerAcceleration;
@@ -117,7 +118,11 @@ public class BasicMovement : MonoBehaviour
                 
         }
         else
+        {
             slideStart = true;
+            gameObject.transform.localScale = new Vector3(1,1,1);
+        }
+            
         if(lerpSlide)
         {
             speedSlide = Mathf.LerpUnclamped(0,8, (timeSlide - Time.time + timeToSlide) / timeToSlide);
