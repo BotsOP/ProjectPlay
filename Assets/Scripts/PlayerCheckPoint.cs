@@ -17,16 +17,17 @@ public class PlayerCheckPoint : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(scene.name);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.name == "RespawnFloor")
         {
-            
             SceneManager.LoadScene(scene.name);
-            //transform.position = playerRespawn;
             StartCoroutine("StopMovement");
         }
     }

@@ -1,8 +1,12 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
+    - AmmoPickUp
     - BasicMovement
+    - CheckPoint
+    - IsGrounded
     - PlayerCamera
+    - PlayerCheckPoint
     - PlayerShoot
     Unity.Rider.Editor.dll:
     - Packages.Rider.Editor.UnitTesting.CallbackData
@@ -53,22 +57,28 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11154}
     - Class: 114
-      Script: {instanceID: 11310}
+      Script: {instanceID: 11244}
     - Class: 114
-      Script: {instanceID: 11732}
+      Script: {instanceID: 11312}
     - Class: 114
-      Script: {instanceID: 12054}
+      Script: {instanceID: 11374}
     - Class: 114
-      Script: {instanceID: 12512}
+      Script: {instanceID: 11736}
     - Class: 114
-      Script: {instanceID: 12590}
+      Script: {instanceID: 11944}
     - Class: 114
-      Script: {instanceID: 12938}
+      Script: {instanceID: 12060}
+    - Class: 114
+      Script: {instanceID: 12518}
+    - Class: 114
+      Script: {instanceID: 12596}
+    - Class: 114
+      Script: {instanceID: 12618}
+    - Class: 114
+      Script: {instanceID: 12946}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
-      Script: {instanceID: 0}
-    - Class: 134
       Script: {instanceID: 0}
     - Class: 136
       Script: {instanceID: 0}
@@ -85,7 +95,7 @@ ScriptsOnlyBuild:
   scriptHashData:
   - hash:
       serializedVersion: 2
-      Hash: 61588a30b843e4ae048770d461dbd3a2
+      Hash: 679211e059d4714a61458a1435c6e805
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerShoot
@@ -113,6 +123,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_Dropdown
+  - hash:
+      serializedVersion: 2
+      Hash: 44aa6e9659d1c318d908e2562ab63964
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: IsGrounded
   - hash:
       serializedVersion: 2
       Hash: e7a73f5f78ba6445195ec23b74a1ce2d
@@ -167,6 +183,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestTools.TestRunner.Callbacks
     className: TestResultRendererCallback
+  - hash:
+      serializedVersion: 2
+      Hash: 15b910c5504ecd49265287fe1de88564
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PlayerCheckPoint
   - hash:
       serializedVersion: 2
       Hash: 234235b9fb07320d11497e08a726cc56
@@ -289,6 +311,12 @@ ScriptsOnlyBuild:
     className: ScrollRect
   - hash:
       serializedVersion: 2
+      Hash: 2b1797c2ae71bebed7cf25a73a888eca
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: AmmoPickUp
+  - hash:
+      serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -307,7 +335,7 @@ ScriptsOnlyBuild:
     className: RemoteTestResultSender
   - hash:
       serializedVersion: 2
-      Hash: 9507ff79a89d9778526c4d9b7d171a58
+      Hash: abbf396d672ef27204d2d3efd78e3b25
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: BasicMovement
@@ -413,6 +441,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestTools
     className: BeforeAfterTestCommandState
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CheckPoint
   - hash:
       serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
@@ -524,4 +558,4 @@ ScriptsOnlyBuild:
   platform: 5
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
-  playerPath: C:/Users/prutm/OneDrive/Desktop/Project Play/Play/Project Play.exe
+  playerPath: C:/Users/prutm/OneDrive/Desktop/ProjectPlay/Play/Project Play.exe
